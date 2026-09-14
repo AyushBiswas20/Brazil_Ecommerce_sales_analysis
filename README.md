@@ -19,7 +19,7 @@ I imagined a CEO walking up to me with these questions:
 
 ## Tools I used
 
-- MySQL as the main database (I also kept a SQLite backup, and I am glad I did)
+- MySQL as the main database (I also kept a SQLite backup)
 - Python (pandas) to load the CSVs into the database and to verify the loads
 - SQL (MySQL Workbench) for the 18 business questions
 - pandas and matplotlib/seaborn in Jupyter for charts, RFM segmentation and cohort analysis
