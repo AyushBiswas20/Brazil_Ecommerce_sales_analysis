@@ -36,32 +36,55 @@ I imagined a CEO walking up to me with these questions:
 
 ## The charts
 
-All charts were produced in Jupyter from queries against my MySQL database. They are in the `images` folder:
+All charts were produced in Jupyter from queries against my MySQL database. They are embedded below:
 
-- Monthly revenue line (takeoff, peak, plateau)
-- Revenue by state (the Sao Paulo cliff)
-- On-time vs late review scores (the 1.7 star gap)
-- Payment types (3 out of 4 payments are credit card)
-- Review score distribution (love it or hate it: people give 5 or 1, rarely in between)
-- RFM customer segments
-- Revenue per segment
-- Cohort retention heatmap
+### Revenue: takeoff, Black Friday peak, plateau
+
+![Monthly revenue](chart_1_revenue.png)
+
+### The Sao Paulo cliff — one state is 38% of revenue
+
+![States](chart_2_states.png)
+
+### Late deliveries cost about 1.7 stars of trust
+
+![On-time vs late](chart_3_headline.png)
+
+### Three out of four payments ride on credit cards
+
+![Payments](chart_4_payments.png)
+
+### Reviews are love-it-or-hate-it (the J-shape)
+
+![Reviews](chart_5_reviews.png)
+
+### 93K customers, 5 personalities — only 1,241 Champions
+
+![RFM segments](chart_6_rfm.png)
+
+### Where the money lives — Big Spenders hold about 49%
+
+![Money by segment](chart_7_money.png)
+
+### Cohort retention: brutal and honest
+
+![Cohort heatmap](chart_8_cohort.png)
 
 ## What is in this repository
 
 - `PROJECT_JOURNAL.md` — my working log: every data quality problem I found, how I investigated it, what I decided, and what I learned. If you only read one file, read this one.
-- `memo/EXECUTIVE_MEMO.pdf` — a one page memo for the CEO: findings and four recommendations.
-- `sql/key_queries.sql` — the important SQL queries with the business question written above each one.
-- `src/` — the Python scripts I used to load CSVs into MySQL and verify the row counts.
-- `images/` — all the charts.
+- `EXECUTIVE_MEMO.md` — a one page memo for the CEO: findings and four recommendations.
+- `key_queries.sql` — the important SQL queries with the business question written above each one.
+- `Project-1DA.ipynb` — the full Jupyter notebook: fetching from MySQL, all charts, RFM segmentation, cohort heatmap.
+- `chart_1` to `chart_8` (PNG) — the charts shown above.
 
 ## How to run it
 
 1. Download the Olist dataset from Kaggle (search "olistbr/brazilian-ecommerce").
-2. In `src/load_to_mysql.py`, set your MySQL password and the folder where you put the CSVs. Keep the password on your machine, do not commit it.
-3. Run the loader. It prints a verification table that compares loaded row counts against expected counts, because I do not trust a load until I have counted.
-4. Open `sql/key_queries.sql` in MySQL Workbench and run the queries against the `olist` schema.
-5. The notebook part needs pandas, matplotlib, seaborn, sqlalchemy and pymysql.
+2. Load the CSVs into a MySQL schema called `olist`. My loading approach: read each CSV with pandas, convert date columns to real dates, write to MySQL, then verify row counts against expected values. A load is not finished until the counts say OK.
+3. Open `key_queries.sql` in MySQL Workbench and run the queries against the `olist` schema.
+4. Open `Project-1DA.ipynb` in Jupyter for the Python part. It needs pandas, matplotlib, seaborn, sqlalchemy and pymysql.
+5. Small quirk worth knowing: when sending SQL from Python that contains `%` (like DATE_FORMAT), the `%` must be doubled to `%%` or the connector rejects it. Documented in the journal.
 
 ## The honest parts
 
